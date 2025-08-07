@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use App\Http\Resources\TodoResource;
 
 class TodoController extends Controller
 {
@@ -46,12 +47,13 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::all();
-        return response()->json($todos);
+        // return response()->json($todos);
+        return TodoResource::collection($todos);
     }
 
     public function show($id)
     {
         $todo = Todo::findOrFail($id);
-        return response()->json($todo);
+        return new TodoResource($todo);
     }
 }
