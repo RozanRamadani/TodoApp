@@ -26,12 +26,14 @@ class AuthController extends Controller
             ]);
         }
 
+        $user()->tokens()->delete();
+
         return $user->createToken($request->device_name)->plainTextToken;
     }
 
     function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out successfully.']);
     }
 }
